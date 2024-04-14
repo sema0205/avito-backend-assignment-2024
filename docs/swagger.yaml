@@ -1,0 +1,355 @@
+definitions:
+  internal_delivery_http_v1.createBannerInput:
+    properties:
+      content:
+        type: string
+      feature_id:
+        type: integer
+      is_active:
+        type: boolean
+      tag_ids:
+        items:
+          type: integer
+        type: array
+    required:
+    - content
+    - feature_id
+    - tag_ids
+    type: object
+  internal_delivery_http_v1.response:
+    properties:
+      message:
+        type: string
+    type: object
+  internal_delivery_http_v1.signInInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  internal_delivery_http_v1.tokenResponse:
+    properties:
+      accessToken:
+        type: string
+    type: object
+  internal_delivery_http_v1.updateBannerInput:
+    properties:
+      content:
+        type: string
+      feature_id:
+        type: integer
+      is_active:
+        type: boolean
+      tag_ids:
+        items:
+          type: integer
+        type: array
+    type: object
+info:
+  contact: {}
+  description: This service provides an interface for managing and retrieving banners.
+  title: Banner Management Service
+  version: "1.0"
+paths:
+  /admins/banners:
+    get:
+      consumes:
+      - application/json
+      description: admin get filtered banners
+      parameters:
+      - description: feature_id
+        in: query
+        name: feature_id
+        type: integer
+      - description: tag_id
+        in: query
+        name: tag_id
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      security:
+      - AdminAuth: []
+      summary: Admin Get Filtered Banners
+      tags:
+      - admins-orders
+    post:
+      consumes:
+      - application/json
+      description: admin create new banner
+      parameters:
+      - description: banner info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_http_v1.createBannerInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      security:
+      - AdminAuth: []
+      summary: Admin Create New Banner
+      tags:
+      - admins-banners
+  /admins/banners/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: admin delete banner
+      parameters:
+      - description: banner id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      security:
+      - AdminAuth: []
+      summary: Admin Delete Banner
+      tags:
+      - admins-banners
+    put:
+      consumes:
+      - application/json
+      description: admin update banner
+      parameters:
+      - description: banner id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: banner update info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_http_v1.updateBannerInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      security:
+      - AdminAuth: []
+      summary: Admin Update Banner
+      tags:
+      - admins-banners
+  /admins/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: admin sign in
+      parameters:
+      - description: sign up info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_http_v1.signInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.tokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      summary: Admin SignIn
+      tags:
+      - admins-auth
+  /users/banner:
+    get:
+      consumes:
+      - application/json
+      description: user get banner
+      parameters:
+      - description: feature_id
+        in: query
+        name: feature_id
+        type: integer
+      - description: tag_id
+        in: query
+        name: tag_id
+        type: integer
+      - description: use_last_revision
+        in: query
+        name: use_last_revision
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      security:
+      - UserAuth: []
+      summary: User Get Banner
+      tags:
+      - users-banners
+  /users/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: user sign in
+      parameters:
+      - description: sign up info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_http_v1.signInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.tokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/internal_delivery_http_v1.response'
+      summary: User SignIn
+      tags:
+      - users-auth
+securityDefinitions:
+  JWT:
+    description: JWT token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

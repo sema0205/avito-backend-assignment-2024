@@ -1,0 +1,13 @@
+http:
+  host: localhost
+  port: 8080
+
+log:
+  level: 'debug'
+
+auth:
+  token_ttl: 2h
+
+cache:
+  expired_ttl: 5m
+  cleanup_ttl: 15m
